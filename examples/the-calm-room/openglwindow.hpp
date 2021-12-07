@@ -29,9 +29,14 @@ class OpenGLWindow : public abcg::OpenGLWindow {
   GLuint m_VBO{};
   GLuint m_EBO{};
   GLuint m_program{};
+  std::vector<const char*> m_shaderNames{"normal", "depth"};
 
   int m_viewportWidth{};
   int m_viewportHeight{};
+
+  glm::mat4 m_modelMatrix{1.0f};
+  glm::mat4 m_viewMatrix{1.0f};
+  glm::mat4 m_projMatrix{1.0f};
 
   Camera m_camera;
   float m_dollySpeed{0.0f};
@@ -39,15 +44,19 @@ class OpenGLWindow : public abcg::OpenGLWindow {
   float m_panSpeed{0.0f};
 
   Model m_floor;
+  int m_floorTrianglesToDraw{};
   glm::mat4 m_floorMatrix{1.0f};
 
   Model m_oldBed;
+  int m_oldBedTrianglesToDraw{};
   glm::mat4 m_oldBedMatrix{1.0f};
 
   Model m_studyDesk;
+  int m_studyDeskTrianglesToDraw{};
   glm::mat4 m_studyDeskMatrix{1.0f};
 
   Model m_shelf;
+  int m_shelfTrianglesToDraw{};
   glm::mat4 m_shelfMatrix{1.0f};
 
   std::vector<Vertex> m_vertices;
