@@ -143,6 +143,16 @@ void Model::setupVAO(GLuint program) {
   abcg::glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
   abcg::glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
+  // Bind normal attribute
+  const GLint normalAttribute{abcg::glGetAttribLocation(program, "inNormal")};
+  if (normalAttribute >= 0) {
+    abcg::glEnableVertexAttribArray(normalAttribute);
+    GLsizei offset{sizeof(glm::vec3)};
+    abcg::glVertexAttribPointer(normalAttribute, 3, GL_FLOAT, GL_FALSE,
+                                sizeof(Vertex),
+                                reinterpret_cast<void*>(offset));
+  }
+
   // Bind vertex attributes
   const GLint positionAttribute{
       abcg::glGetAttribLocation(program, "inPosition")};
