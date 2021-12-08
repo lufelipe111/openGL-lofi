@@ -17,7 +17,7 @@
 
 class OpenGLWindow : public abcg::OpenGLWindow {
  protected:
-  // void handleEvent(SDL_Event& ev) override;
+  void handleEvent(SDL_Event& ev) override;
   void initializeGL() override;
   void paintGL() override;
   void paintUI() override;
@@ -29,7 +29,6 @@ class OpenGLWindow : public abcg::OpenGLWindow {
   GLuint m_VBO{};
   GLuint m_EBO{};
   GLuint m_program{};
-  std::vector<const char*> m_shaderNames{"normal", "depth"};
 
   int m_viewportWidth{};
   int m_viewportHeight{};

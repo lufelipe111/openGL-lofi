@@ -17,7 +17,6 @@ void main() {
 
   // vec3 N = inNormal;  // Object space
   vec3 N = normalMatrix * inNormal; // Eye space
-  // vec4 N = viewMatrix * modelMatrix * vec4(inNormal, 0);
 
   // Convert from [-1,1] to [0,1]
   fragColor = vec4((N + 1.0) / 2.0, 1.0);
