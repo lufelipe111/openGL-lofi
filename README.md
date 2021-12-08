@@ -18,12 +18,16 @@ O projeto é composto de alguns modelos (atualmente mesa, estante, cama e chão)
 Não foram encontrados bugs gráficos localmente nessa entrega.
 
 Apesar disso ao compilar o arquivo para WebAssembly o browser retornava um erro sem carregar a aplicação.
+- Após feitas as mudanças sugeridas de trocar "\\" por "/" e a pasta "Assets" por "assets" o erro ainda persistiu
 
 ---
 
 ### Próximas funcionalidades
-- [ ] interação do usuário com o ambiente a partir da câmera
-- [ ] tratamento de luminosidade
+- [x] interação do usuário com o ambiente a partir da câmera
+  - Movimentos de camera com controles AWSD
+- [x] tratamento de luminosidade
+  - A intenção aqui era fazer diversos modelos de luminosidade e sombreamento, como Goraud, Phong e Blinn-Phong
+  - Por bugs nao explorados ainda ao utilizar outros modelos de iluminação, os assets nao renderizam
 - [ ] criação de texturas
 
 ---
