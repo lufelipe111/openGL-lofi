@@ -74,23 +74,52 @@ void OpenGLWindow::paintGL() {
   abcg::glUseProgram(m_program);
 
   // Get location of uniform variables
-  const GLint viewMatrixLoc{glGetUniformLocation(m_program, "viewMatrix")};
-  const GLint projMatrixLoc{glGetUniformLocation(m_program, "projMatrix")};
-  const GLint modelMatrixLoc{glGetUniformLocation(m_program, "modelMatrix")};
-  const GLint normalMatrixLoc{glGetUniformLocation(m_program, "normalMatrix")};
+  const GLint viewMatrixLoc{
+      abcg::glGetUniformLocation(m_program, "viewMatrix")};
+  const GLint projMatrixLoc{
+      abcg::glGetUniformLocation(m_program, "projMatrix")};
+  const GLint modelMatrixLoc{
+      abcg::glGetUniformLocation(m_program, "modelMatrix")};
+  const GLint normalMatrixLoc{
+      abcg::glGetUniformLocation(m_program, "normalMatrix")};
+  const GLint lightDirLoc{
+      abcg::glGetUniformLocation(m_program, "lightDirWorldSpace")};
+  const GLint shininessLoc{abcg::glGetUniformLocation(m_program, "shininess")};
+  const GLint IaLoc{abcg::glGetUniformLocation(m_program, "Ia")};
+  const GLint IdLoc{abcg::glGetUniformLocation(m_program, "Id")};
+  const GLint IsLoc{abcg::glGetUniformLocation(m_program, "Is")};
+  const GLint KaLoc{abcg::glGetUniformLocation(m_program, "Ka")};
+  const GLint KdLoc{abcg::glGetUniformLocation(m_program, "Kd")};
+  const GLint KsLoc{abcg::glGetUniformLocation(m_program, "Ks")};
+  const GLint diffuseTexLoc{
+      abcg::glGetUniformLocation(m_program, "diffuseTex")};
+  const GLint mappingModeLoc{
+      abcg::glGetUniformLocation(m_program, "mappingMode")};
 
   // Set uniform variables used by every scene object
-  abcg::glUniformMatrix4fv(viewMatrixLoc, 1, GL_FALSE,
-                           &m_camera.m_viewMatrix[0][0]);
-  abcg::glUniformMatrix4fv(projMatrixLoc, 1, GL_FALSE,
-                           &m_camera.m_projMatrix[0][0]);
+  abcg::glUniformMatrix4fv(viewMatrixLoc, 1, GL_FALSE, &m_viewMatrix[0][0]);
+  abcg::glUniformMatrix4fv(projMatrixLoc, 1, GL_FALSE, &m_projMatrix[0][0]);
+  abcg::glUniform1i(diffuseTexLoc, 0);
+
+  const auto lightDirRotated{glm::vec3{0.0f}};
+  abcg::glUniform4fv(lightDirLoc, 1, &lightDirRotated.x);
+  abcg::glUniform4fv(IaLoc, 1, &m_Ia.x);
+  abcg::glUniform4fv(IdLoc, 1, &m_Id.x);
+  abcg::glUniform4fv(IsLoc, 1, &m_Is.x);
 
   // Set uniform variables of the current object
   abcg::glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, &m_modelMatrix[0][0]);
 
   const auto modelViewMatrix{glm::mat3(m_viewMatrix * m_modelMatrix)};
-  const glm::mat3 normalMatrix{glm::inverseTranspose(modelViewMatrix)};
+  glm::mat3 normalMatrix{glm::inverseTranspose(modelViewMatrix)};
   abcg::glUniformMatrix3fv(normalMatrixLoc, 1, GL_FALSE, &normalMatrix[0][0]);
+
+  abcg::glUniform1f(shininessLoc, m_shininess);
+  abcg::glUniform4fv(KaLoc, 1, &m_Ka.x);
+  abcg::glUniform4fv(KdLoc, 1, &m_Kd.x);
+  abcg::glUniform4fv(KsLoc, 1, &m_Ks.x);
+
+  abcg::glUseProgram(0);
 
   // render floor
   m_floorMatrix = glm::mat4{1.0f};
